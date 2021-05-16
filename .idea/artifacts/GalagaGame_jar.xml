@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="GalagaGame:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/GalagaGame_jar</output-path>
+    <root id="archive" name="GalagaGame.jar">
+      <element id="module-output" name="GalagaGame" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../2DGameEngine/out/artifacts/2DGameEngine_jar/2DGameEngine.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

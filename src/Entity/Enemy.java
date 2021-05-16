@@ -1,7 +1,6 @@
 package Entity;
 
 import GameState.GameState;
-import Main.GameLoop;
 
 public class Enemy extends SpaceShip {
 	
