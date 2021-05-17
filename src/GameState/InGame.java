@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import Entity.*;
 import Main.Galaga;
 import Main.GameLoop;
+import UI.Button;
 import Utils.Functions;
 import Utils.Input;
 
@@ -44,6 +45,7 @@ public class InGame extends GameState {
 		spawn(new Background(this, "sprites/Background.png"));
 		spawn(player = new Player(this));
 		spawnWave(getCurrentWave());
+		spawn(new Button(this));
 
 		// initialize font and color
 		scoreFont = new Font("Arial", Font.BOLD, 24);

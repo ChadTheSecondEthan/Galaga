@@ -73,5 +73,4 @@ public class Bullet extends Entity {
 	
 	/** allow a change in the bullet's speed in pixels per second */
 	public void setSpeed(int pixelsPerSecond) { speed = pixelsPerSecond; }
-
 }

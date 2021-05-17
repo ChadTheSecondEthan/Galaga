@@ -1,6 +1,5 @@
 package Entity;
 
-import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
@@ -133,9 +132,9 @@ public class Player extends SpaceShip {
 		
 		// create a bullet from the spaceship's spawnBullet method
 		Bullet bullet = spawnBullet(x, y, false);
-		
-		// add score when it is destroyed
-		bullet.setOnDestroy(() -> {
+
+		// add on destroy listener
+		bullet.addListener(Action.onDestroy(() -> {
 			
 			// if the bullet killed an enemy, add to the score
 			// and also allow the game state to check the
@@ -147,7 +146,7 @@ public class Player extends SpaceShip {
 				score += enemy.getScore();
 				((InGame) gameState).checkEnemyCount();
 			}
-		});
+		}));
 	}
 
 	/** keeps the player within the bounds of the screen */
