@@ -7,6 +7,7 @@ import java.awt.event.KeyEvent;
 import Main.Galaga;
 import Main.GameLoop;
 import Utils.Input;
+import UI.Text;
 
 public class Instructions extends GameState {
 	
@@ -17,28 +18,33 @@ public class Instructions extends GameState {
 			"F or P: Shoot"
 	};
 
-	Instructions(GameLoop gameLoop) {
-		super(gameLoop);
+	public Instructions() {
+		super();
+
+		Text instructionsText = new Text("Instructions");
+		instructionsText.setPosition(Galaga.WINDOW_WIDTH * 0.5f, 100);
+		instructionsText.setColor(Color.red);
+		instructionsText.spawn();
+
+		for (int i = 0; i < instructions.length; i++) {
+			Text text = new Text(instructions[i]);
+			text.setPosition(100, 450 + 50 * i);
+			text.setColor(Color.red);
+			text.spawn();
+		}
+	}
+
+	@Override
+	public void init() {
+
 	}
 	
 	@Override
 	public void update(float dt) {
-		super.update(dt);
 		
 		// if the user pressed escape, take them to the home page
 		if (Input.getKeyDown(KeyEvent.VK_ESCAPE))
-			gameLoop.setState(new Menu(gameLoop));
-	}
-	
-	@Override
-	public void draw(Graphics g) {
-		super.draw(g);
-		
-		g.setColor(Color.red);
-		g.drawString("Instructions", (Galaga.WINDOW_WIDTH - g.getFontMetrics().stringWidth("Instructions")) / 2, 100);
-		
-		for (int i = 0; i < instructions.length; i++)
-			g.drawString(instructions[i], 100, 450 + 50 * i);
+			setState(Galaga.MENU);
 	}
 
 }

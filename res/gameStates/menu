@@ -1,0 +1,17 @@
+<GameState>
+    <Entity.Background src="sprites/Background.png"/>
+
+    <UI.Button x="260" y="300" width="200" height="100" name="startButton"/>
+    <UI.Text x="360" y="325">Start</UI.Text>
+
+    <UI.Button x="260" y="450" width="200" height="100" name="shopButton"/>
+    <UI.Text x="360" y="475">Shop</UI.Text>
+
+    <UI.Button x="260" y="600" width="200" height="100" name="helpButton"/>
+    <UI.Text x="360" y="625">Help</UI.Text>
+
+    <UI.Button x="260" y="750" width="200" height="100" name="quitButton"/>
+    <UI.Text x="360" y="775">Quit</UI.Text>
+
+    <UI.Text x="360" y="200" name="title">Galaga</UI.Text>
+</GameState>

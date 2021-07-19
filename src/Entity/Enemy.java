@@ -1,27 +1,28 @@
 package Entity;
 
 import GameState.GameState;
+import Main.Game;
 
 public class Enemy extends SpaceShip {
 	
 	// the chance that this enemy will shoot each second and the chance to drop a powerup
 	private float shootChance;
 	private float powerupChance;
+	private float coinChance;
 	
 	// difficulty of this enemy
 	private int difficulty;
 
-	public Enemy(GameState gameState, int difficulty, float x, float y) {
-		super(gameState);
+	public Enemy(int difficulty) {
+		super();
 		
 		this.difficulty = difficulty;
-		this.x = x;
-		this.y = y;
 		width = height = 40;
 		
-		// 10% chance to shoot per second + 10% per difficulty level, 20% chance to drop a powerup
+		// 10% chance to shoot per second + 10% per difficulty level, 20% chance to drop a powerup, 50% chance for a coin
 		shootChance = 0.1f + 0.1f * difficulty;
 		powerupChance = 0.2f;
+		coinChance = 0.5f;
 		
 		// 25 pixels per second of speed
 		speed = 25;
@@ -41,17 +42,17 @@ public class Enemy extends SpaceShip {
 		if (Math.random() < shootChance * dt) shoot();
 		
 		// switch directions every so often
-		if (gameState.getGameLoop().stateTime() % 8 < 2f || gameState.getGameLoop().stateTime() % 8 > 6f)
-			x += speed * dt;
+		if (Game.instance().getGameLoop().stateTime() % 8 < 2f || Game.instance().getGameLoop().stateTime() % 8 > 6f)
+			setX(getX() + speed * dt);
 		else 
-			x -= speed * dt;
+			setX(getX() - speed * dt);
 	}
 	
 	/** shoots a bullet */
 	private void shoot() {
 		
 		// create a bullet at this position
-		Bullet bullet = spawnBullet(x, y + height, true);
+		Bullet bullet = spawnBullet(getX(), getY() + height, true);
 		
 		// set the speed to be 400 plus 50 per level of difficulty
 		bullet.setSpeed(400 + 50 * difficulty);
@@ -76,11 +77,19 @@ public class Enemy extends SpaceShip {
 
 		// don't destroy if this enemy is dead
 		if (isAlive()) return;
+
+		// check if a coin should be dropped
+		if (Math.random() < coinChance) {
+			Powerup powerup = new Powerup(Powerup.COIN);
+			powerup.setPosition(getX(), getY() + height);
+			powerup.spawn();
+		}
 		
 		// check if a powerup should be dropped
-		if (Math.random() < powerupChance) {
-			Powerup powerup = new Powerup(gameState, x, y + height);
-			gameState.spawn(powerup);
+		else if (Math.random() < powerupChance) {
+			Powerup powerup = new Powerup();
+			powerup.setPosition(getX(), getY() + height);
+			powerup.spawn();
 		}
 	}
 

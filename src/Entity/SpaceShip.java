@@ -6,6 +6,8 @@ import java.awt.*;
 
 public abstract class SpaceShip extends Entity {
 
+    public static final byte SHOOT = 1;
+
     // pixels per second speed
     protected float speed;
 
@@ -22,8 +24,8 @@ public abstract class SpaceShip extends Entity {
     // number of bullets per shot
     protected int bulletCount;
 
-    public SpaceShip(GameState gameState) {
-        super(gameState);
+    public SpaceShip() {
+        super();
 
         // shoot from the left side to begin
         shootLeft = true;
@@ -67,7 +69,7 @@ public abstract class SpaceShip extends Entity {
         flinchTime = 0;
 
         // lose a life. if dead, remove it from the game
-        lives--;
+        setLives(lives - 1);
         if (!isAlive())
             super.destroy();
     }
@@ -75,16 +77,21 @@ public abstract class SpaceShip extends Entity {
     /** spawns a bullet at the given position and returns it */
     Bullet spawnBullet(float x, float y, boolean goesDown) {
 
+        invokeListeners(SHOOT);
+
         // create a bullet with the x position dependent on
         // whether or not the bullet is coming from the left or right
-        Bullet bullet = new Bullet(gameState, x, y, goesDown);
+        Bullet bullet = new Bullet(goesDown);
+        bullet.setAbsolutePosition(x, y);
 
         // spawn the bullet
-        gameState.spawn(bullet);
+        bullet.spawn();
 
         // return that bullet
         return bullet;
     }
+
+    void setLives(int lives) { this.lives = lives; }
 
     /** is the spaceship alive or not? */
     boolean isAlive() { return lives > 0; }

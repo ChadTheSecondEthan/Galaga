@@ -15,12 +15,10 @@ public class Bullet extends Entity {
 	private float speed;
 
 	/** create a bullet given the game state, a starting position, and a direction */
-	public Bullet(GameState gameState, float x, float y, boolean goesDown) {
-		super(gameState);
+	public Bullet(boolean goesDown) {
+		super();
 		
 		this.goesDown = goesDown;
-		this.x = x;
-		this.y = y;
 		
 		// hasn't initially hit an entity
 		hitEntity = null;
@@ -38,14 +36,14 @@ public class Bullet extends Entity {
 	public void update(float dt) {
 		
 		// update the y value of the bullet based on the speed and direction
-		y += speed * dt * (goesDown ? 1 : -1);
+		setRelativeY(getRelativeY() + speed * dt * (goesDown ? 1 : -1));
 		
 		// destroy if it hits a wall
-		if (y < 0 || y > Galaga.WINDOW_HEIGHT)
+		if (getAbsoluteY() < 0 || getAbsoluteY() > Galaga.WINDOW_HEIGHT)
 			destroy();
 	
 		// destroy if it hits an entity
-		for (Entity e : gameState.getEntities()) {
+		for (Entity e : GameState.current().getEntities()) {
 			
 			// it cannot hit itself or another bullet
 			if (e instanceof Bullet) continue;

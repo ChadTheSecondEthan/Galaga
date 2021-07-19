@@ -7,11 +7,27 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="caacf247-95af-4154-ab45-29d33ceb4211" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/res/elements/shopEntry" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/gameStates/menu" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/gameStates/shop" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/shopItems" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/sprites/Powerup5.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/GameState/Shop.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Main/GameStats.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Shop/ShopItem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/GalagaGame_jar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/GalagaGame_jar.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/fishere.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dictionaries/fishere.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GalagaGame.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Background.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Background.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Entity/Bullet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Bullet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Enemy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Enemy.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Entity/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Powerup.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Powerup.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/SpaceShip.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/SpaceShip.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/GameState/InGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GameState/InGame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GameState/Instructions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GameState/Instructions.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GameState/Menu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GameState/Menu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main/Galaga.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main/Galaga.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -33,20 +49,21 @@
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/lib" />
-    <property name="project.structure.last.edited" value="Artifacts" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/res/sprites" />
+    <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\fishere\IdeaProjects\GalagaGame" />
-      <recent name="C:\Users\fishere\IdeaProjects\GalagaGame\lib" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\fishere\IdeaProjects\GalagaGame\res\sprites" />
       <recent name="C:\Users\fishere\IdeaProjects\GalagaGame\lib" />
       <recent name="C:\Users\fishere\IdeaProjects\GalagaGame\src" />
       <recent name="C:\Users\fishere\IdeaProjects\GalagaGame" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\fishere\IdeaProjects\GalagaGame" />
+      <recent name="C:\Users\fishere\IdeaProjects\GalagaGame\lib" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -99,7 +116,9 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>

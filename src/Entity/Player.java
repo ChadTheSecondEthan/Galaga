@@ -7,6 +7,7 @@ import GameState.GameState;
 import GameState.InGame;
 import Main.Galaga;
 import Utils.Input;
+import Utils.Stats;
 
 public class Player extends SpaceShip {
 	
@@ -26,13 +27,18 @@ public class Player extends SpaceShip {
 	private float shotTimeout;
 	private float timeBetweenLastShot;
 
-	public Player(GameState gameState) {
-		super(gameState);
+	// stats
+	private Stats stats;
+
+	public Player() {
+		super();
+
+		stats = Stats.find("player");
 		
 		// set the bounds of the player with x in the center
 		width = height = 50;
-		x = (Galaga.WINDOW_WIDTH - width) / 2.f;
-		y = Galaga.WINDOW_HEIGHT - 100;
+		setX((Galaga.WINDOW_WIDTH - width) * 0.5f);
+		setY(Galaga.WINDOW_HEIGHT - 100);
 		
 		// create powerups array list
 		powerups = new ArrayList<>();
@@ -40,7 +46,7 @@ public class Player extends SpaceShip {
 		// can move 300 pixels per second, 3 lives to start
 		speed = 300;
 		score = 0;
-		lives = 3;
+		lives = stats.readInt("lives", 3);
 		
 		// the player starts off not flinching
 		flinching = false;
@@ -69,13 +75,13 @@ public class Player extends SpaceShip {
 		
 		// move the player based on inputs
 		if (Input.getKey(KeyEvent.VK_RIGHT) || Input.getKey(KeyEvent.VK_D))
-			x += speed * dt;
+			setX(getX() + speed * dt);
 		if (Input.getKey(KeyEvent.VK_LEFT) || Input.getKey(KeyEvent.VK_A))
-			x -= speed * dt;
+			setX(getX() - speed * dt);
 		if (Input.getKey(KeyEvent.VK_UP) || Input.getKey(KeyEvent.VK_W))
-			y -= speed * dt;
+			setY(getY() - speed * dt);
 		if (Input.getKey(KeyEvent.VK_DOWN) || Input.getKey(KeyEvent.VK_S))
-			y += speed * dt;
+			setY(getY() + speed * dt);
 		
 		// shoot with f or j
 		if (Input.getKey(KeyEvent.VK_F) || Input.getKey(KeyEvent.VK_J))
@@ -96,26 +102,26 @@ public class Player extends SpaceShip {
 			
 			// spawn the bullet based on whether or not the shot
 			// is from the left or right sides
-			shoot(shootLeft ? (x - 2) : (x + 42));
+			shoot(shootLeft ? (getX() - 2) : (getX() + 42));
 			
 		else if (bulletCount == 2) {
 			
 			// spawn bullets on both sides
-			shoot(x - 2);
-			shoot(x + 42);
+			shoot(getX() - 2);
+			shoot(getX() + 42);
 			
 		} else if (bulletCount == 3) {
 			
 			// spawn bullets on both sides and the center
-			shoot(x - 2);
-			shoot(x + 22);
-			shoot(x + 42);
+			shoot(getX() - 2);
+			shoot(getX() + 22);
+			shoot(getX() + 42);
 			
 		} else {
 
 			// spawn a bullet for each bullet count
 			for (int i = 0; i < bulletCount; i++) {
-				shoot(x + 22 - (bulletCount - 1) * 10 + i * 20);
+				shoot(getX() + 22 - (bulletCount - 1) * 10 + i * 20);
 			}
 
 		}
@@ -131,10 +137,10 @@ public class Player extends SpaceShip {
 	private void shoot(float x) {
 		
 		// create a bullet from the spaceship's spawnBullet method
-		Bullet bullet = spawnBullet(x, y, false);
+		Bullet bullet = spawnBullet(x, getY(), false);
 
 		// add on destroy listener
-		bullet.addListener(Action.onDestroy(() -> {
+		bullet.addListener(DESTROY, () -> {
 			
 			// if the bullet killed an enemy, add to the score
 			// and also allow the game state to check the
@@ -144,23 +150,24 @@ public class Player extends SpaceShip {
 				if (enemy.isAlive())
 					return;
 				score += enemy.getScore();
-				((InGame) gameState).checkEnemyCount();
+				((InGame) GameState.current()).checkEnemyCount();
 			}
-		}));
+		});
 	}
 
 	/** keeps the player within the bounds of the screen */
 	private void clampPosition() {
 
 		// if x is outside the x bounds, snap it back
-		if (x < 0) x = 0;
-		else if (x > Galaga.WINDOW_WIDTH - width)
-			x = Galaga.WINDOW_WIDTH - width;
+		if (getX() < 0) setX(0);
+		else if (getX() > Galaga.WINDOW_WIDTH - width)
+			setX(Galaga.WINDOW_WIDTH - width);
 
 		// if y is outside the y bounds, snap it back
-		if (y < MIN_HEIGHT) y = MIN_HEIGHT;
-		else if (y > Galaga.WINDOW_HEIGHT - height)
-			y = Galaga.WINDOW_HEIGHT - height;
+		if (getY() < MIN_HEIGHT)
+			setY(MIN_HEIGHT);
+		else if (getY() > Galaga.WINDOW_HEIGHT - height)
+			setY(Galaga.WINDOW_HEIGHT - height);
 	}
 	
 	/** returns the player's score */
@@ -168,8 +175,13 @@ public class Player extends SpaceShip {
 	
 	/** returns the player's lives */
 	public int getLives() { return lives; }
+
 	/** sets the player's lives */
-	void setLives(int lives) { this.lives = Math.min(lives, MAX_LIVES); }
+	@Override
+	void setLives(int lives) {
+		this.lives = Math.min(lives, MAX_LIVES);
+		stats.write("lives", this.lives);
+	}
 	
 	/** returns the powerups affecting the player */
 	public ArrayList<Powerup> getPowerups() { return powerups; }

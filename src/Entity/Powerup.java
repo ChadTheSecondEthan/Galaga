@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import GameState.GameState;
 import Main.Galaga;
+import Main.GameStats;
 
 public class Powerup extends Entity {
 	
@@ -13,6 +14,7 @@ public class Powerup extends Entity {
 	private static final int TRIPLE_FIRE = 2;
 	private static final int SPEED_BOOST = 3;
 	private static final int HEALTH_BOOST = 4;
+	public static final int COIN = 5;
 	private int type;
 	
 	// powerup time
@@ -21,20 +23,21 @@ public class Powerup extends Entity {
 	// pixels per second
 	private float speed;
 
-	public Powerup(GameState gameState, float x, float y) {
-		super(gameState);
-		
-		this.x = x;
-		this.y = y;
+	public Powerup() {
+		this((int) (Math.random() * 6));
+	}
+
+	public Powerup(int type) {
+		super();
 
 		// set the width and height
 		width = height = 36;
-		
-		// get a random type
-		type = (int) (Math.random() * 4);
+
+		// set type
+		this.type = type;
 		
 		// time is a random number from 5 (inclusive) - 10 (exclusive) seconds
-		if (type != HEALTH_BOOST)
+		if (type != HEALTH_BOOST && type != COIN)
 			time = (int) (Math.random() * 5 + 5);
 		
 		// speed in pixels per second
@@ -48,14 +51,14 @@ public class Powerup extends Entity {
 	public void update(float dt) {
 		
 		// update the y value of the powerup
-		y += speed * dt;
+		setRelativeY(getRelativeY() + speed * dt);
 		
 		// destroy if it hits a wall
-		if (y > Galaga.WINDOW_HEIGHT)
+		if (getAbsoluteY() > Galaga.WINDOW_HEIGHT)
 			destroy();
 	
 		// find the player entity
-		for (Entity e : gameState.getEntities()) {
+		for (Entity e : GameState.current().getEntities()) {
 			
 			// if the powerup touches a player, give the player the powerup
 			if (e instanceof Player && intersects(e)) {
@@ -68,9 +71,6 @@ public class Powerup extends Entity {
 	
 	/** applys the powerup's effects to the player */
 	private void applyPowerup(final Player player) {
-		
-		// add this powerup to the player
-		player.addPowerup(this);
 		
 		// apply this powerup to the player
 		switch (type) {
@@ -90,9 +90,15 @@ public class Powerup extends Entity {
 		case HEALTH_BOOST:
 			player.setLives(player.getLives() + 1);
 			break;
+		case COIN:
+			GameStats.instance().addCoins(1);
+			break;
 		}
 
-		if (type == HEALTH_BOOST) return;
+		if (type == HEALTH_BOOST || type == COIN) return;
+
+		// add this powerup to the player
+		player.addPowerup(this);
 		
 		// wait time seconds, then reset the powerup
 		new Thread(() -> {
@@ -107,7 +113,6 @@ public class Powerup extends Entity {
 			// reset the powerups
 			resetPowerup(player);
 		}).start();
-		
 	}
 	
 	/** resets the powerup's effects to the player */

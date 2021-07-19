@@ -1,6 +1,10 @@
 package Main;
 
-import GameState.Menu;
+import GameState.*;
+import Utils.Stats;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Author: Ethan Fisher
@@ -12,11 +16,25 @@ public class Galaga {
     public static final int WINDOW_WIDTH = 720;
     public static final int WINDOW_HEIGHT = 960;
 
+    public static final int MENU = 0;
+    public static final int IN_GAME = 1;
+    public static final int INSTRUCTIONS = 2;
+    public static final int SHOP = 3;
+
     public static void main(String[] args) {
         Game game = new Game("Galaga");
         game.getWindow().setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
         game.getWindow().setLocationRelativeTo(null);
-        game.start(new Menu(game.getGameLoop()));
+
+        GameStats.createInstance();
+
+        game.setStates(new GameState[] {
+                new Menu(),
+                new InGame(),
+                new Instructions(),
+                new Shop()
+        });
+        game.start(MENU);
     }
 	
 //	// default window sizes for when entities are drawn

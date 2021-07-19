@@ -1,0 +1,3 @@
+<GameState>
+    <UI.ScrollView x="25" y="180" width="200" height="600" name="scrollView" />
+</GameState>
